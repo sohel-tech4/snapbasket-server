@@ -50,6 +50,10 @@ const StudentSchema = new Schema<TStudent, StudentModel>({
   isActive: { type: String, enum: ["active", "inActive"], required: true },
 });
 
+StudentSchema.pre("save", function () {
+  console.log(this, pre);
+});
+
 StudentSchema.statics.isUserExists = async function (id: string) {
   const existingUser = await Student.findOne({ id });
   return existingUser;
