@@ -1,3 +1,5 @@
+import { Model } from "mongoose";
+
 export type UserName = {
   firstName: string;
   middleName: string;
@@ -20,7 +22,7 @@ export type LocalGuardian = {
   address: string;
 };
 
-export type Student = {
+export type TStudent = {
   id: string;
   name: UserName;
   gender: "male" | "female";
@@ -36,3 +38,7 @@ export type Student = {
   profileImg?: string;
   isActive: "active" | "inActive";
 };
+
+export interface StudentModel extends Model<TStudent> {
+  isUserExists(id: string): Promise<TStudent | null>;
+}

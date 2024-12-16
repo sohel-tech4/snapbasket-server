@@ -2,7 +2,8 @@ import { Schema, model } from "mongoose";
 import {
   Guardian,
   LocalGuardian,
-  Student,
+  TStudent,
+  StudentModel,
   UserName,
 } from "./student.interface";
 
@@ -28,7 +29,7 @@ const LocalGuardianSchema = new Schema<LocalGuardian>({
   address: { type: String, required: true },
 });
 
-const StudentSchema = new Schema<Student>({
+const StudentSchema = new Schema<TStudent, StudentModel>({
   id: { type: String },
   name: { type: UserNameSchema, required: true },
   gender: { type: String, enum: ["male", "female"], required: true },
@@ -49,4 +50,8 @@ const StudentSchema = new Schema<Student>({
   isActive: { type: String, enum: ["active", "inActive"], required: true },
 });
 
-export const StudentModel = model<Student>("Student", StudentSchema);
+StudentSchema.statics.isUserExists = async function (id: string) {
+  const existingUser = await Student.findOne({ id });
+  return existingUser;
+};
+export const Student = model<TStudent, StudentModel>("Student", StudentSchema);
