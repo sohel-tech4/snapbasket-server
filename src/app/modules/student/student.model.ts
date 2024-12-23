@@ -31,6 +31,7 @@ const LocalGuardianSchema = new Schema<LocalGuardian>({
 
 const StudentSchema = new Schema<TStudent, StudentModel>({
   id: { type: String },
+  password: { type: String, required: [true, "Password is required"] },
   name: { type: UserNameSchema, required: true },
   gender: { type: String, enum: ["male", "female"], required: true },
   dateOfBirth: { type: String, required: true },
@@ -51,7 +52,11 @@ const StudentSchema = new Schema<TStudent, StudentModel>({
 });
 
 StudentSchema.pre("save", function () {
-  console.log(this, pre);
+  console.log(this, "Pree Hook: We will save data");
+});
+
+StudentSchema.post("save", function () {
+  console.log(this, "Post Hook : we saved data");
 });
 
 StudentSchema.statics.isUserExists = async function (id: string) {
