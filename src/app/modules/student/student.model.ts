@@ -6,6 +6,8 @@ import {
   StudentModel,
   UserName,
 } from "./student.interface";
+import bcrypt from "bcrypt";
+import config from "../../config";
 
 const UserNameSchema = new Schema<UserName>({
   firstName: { type: String, required: true },
@@ -51,12 +53,23 @@ const StudentSchema = new Schema<TStudent, StudentModel>({
   isActive: { type: String, enum: ["active", "inActive"], required: true },
 });
 
-StudentSchema.pre("save", function () {
-  console.log(this, "Pree Hook: We will save data");
+// to hash password
+
+StudentSchema.pre("save", async function (next) {
+  // console.log(this, "Pree Hook: We will save data");
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this;
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_rounds_salt)
+  );
+  next();
 });
 
-StudentSchema.post("save", function () {
-  console.log(this, "Post Hook : we saved data");
+// after save data password will not show here
+StudentSchema.post("save", function (doc, next) {
+  doc.password = "";
+  next();
 });
 
 StudentSchema.statics.isUserExists = async function (id: string) {
