@@ -31,26 +31,39 @@ const LocalGuardianSchema = new Schema<LocalGuardian>({
   address: { type: String, required: true },
 });
 
-const StudentSchema = new Schema<TStudent, StudentModel>({
-  id: { type: String },
-  password: { type: String, required: [true, "Password is required"] },
-  name: { type: UserNameSchema, required: true },
-  gender: { type: String, enum: ["male", "female"], required: true },
-  dateOfBirth: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  contactNo: { type: String, required: true },
-  emergencyContactNo: { type: String, required: true },
-  bloodGroup: {
-    type: String,
-    enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
-    required: false,
+const StudentSchema = new Schema<TStudent, StudentModel>(
+  {
+    id: { type: String },
+    password: { type: String, required: [true, "Password is required"] },
+    name: { type: UserNameSchema, required: true },
+    gender: { type: String, enum: ["male", "female"], required: true },
+    dateOfBirth: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    contactNo: { type: String, required: true },
+    emergencyContactNo: { type: String, required: true },
+    bloodGroup: {
+      type: String,
+      enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+      required: false,
+    },
+    presentAddress: { type: String, required: true },
+    permanentAddress: { type: String, required: true },
+    guardian: { type: GuardianSchema, required: true },
+    localGuardian: { type: LocalGuardianSchema, required: true },
+    profileImg: { type: String, required: false }, // Optional
+    isActive: { type: String, enum: ["active", "inActive"], required: true },
+    isDeleted: { type: Boolean, default: false },
   },
-  presentAddress: { type: String, required: true },
-  permanentAddress: { type: String, required: true },
-  guardian: { type: GuardianSchema, required: true },
-  localGuardian: { type: LocalGuardianSchema, required: true },
-  profileImg: { type: String, required: false }, // Optional
-  isActive: { type: String, enum: ["active", "inActive"], required: true },
+  {
+    toJSON: {
+      virtuals: true,
+    },
+  }
+);
+
+// virtual
+StudentSchema.virtual("fullName").get(function () {
+  return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
 });
 
 // to hash password
@@ -69,6 +82,22 @@ StudentSchema.pre("save", async function (next) {
 // after save data password will not show here
 StudentSchema.post("save", function (doc, next) {
   doc.password = "";
+  next();
+});
+
+// Query Middlewear
+StudentSchema.pre("find", function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+StudentSchema.pre("findOne", function (next) {
+  this.findOne({ isDeleted: { $ne: true } });
+  next();
+});
+
+StudentSchema.pre("aggregate", function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
   next();
 });
 

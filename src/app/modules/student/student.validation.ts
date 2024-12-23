@@ -54,6 +54,7 @@ const StudentValidationSchema = z.object({
   localGuardian: LocalGuardianValidationSchema,
   profileImg: z.string().url().optional(),
   isActive: z.enum(["active", "inActive"]),
+  isDeleted: z.boolean(),
 });
 
 export default StudentValidationSchema;
