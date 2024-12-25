@@ -1,10 +1,12 @@
+import { UserService } from "./user.sevice";
+
 const createStudent = async (req: Request, res: Response) => {
   try {
-    const { student: StudentData } = req.body;
+    const { Password, student: StudentData } = req.body;
 
-    const zodParseData = StudentValidationSchema.parse(StudentData);
+    // const zodParseData = StudentValidationSchema.parse(StudentData);
 
-    const result = await StduentServices.createStudentIntoDB(zodParseData);
+    const result = await UserService.createStudentIntoDB(Password, StudentData);
     res.status(200).json({
       success: true,
       message: "Stduent is Created Successfully",

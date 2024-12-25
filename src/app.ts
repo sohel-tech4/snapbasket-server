@@ -9,6 +9,8 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/v1/students", StudentRoutes);
+app.use("/api/v1/users", UserRoutes);
+
 app.use("/", StudentRoutes);
 app.use("/:id", StudentRoutes);
 
