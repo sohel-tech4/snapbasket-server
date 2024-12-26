@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { StduentServices } from "./student.service";
 
-const getStudents = async (req: Request, res: Response) => {
+const getStudents = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await StduentServices.getAllStudentsFromDB();
     res.status(200).json({
@@ -9,17 +9,16 @@ const getStudents = async (req: Request, res: Response) => {
       message: "Stduents are retrived Successfully",
       data: result,
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: error.message || "Something went wrong",
-      error: error,
-    });
+  } catch (err) {
+    next(err);
   }
 };
 
-const getSingleStudent = async (req: Request, res: Response) => {
+const getSingleStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { studentId } = req.params;
     const result = await StduentServices.getSingleStudentFromDB(studentId);
@@ -28,17 +27,16 @@ const getSingleStudent = async (req: Request, res: Response) => {
       message: "Stduent is retrived Successfully",
       data: result,
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: error.message || "Something went wrong",
-      error: error,
-    });
+  } catch (err) {
+    next(err);
   }
 };
 
-const deleteStudent = async (req: Request, res: Response) => {
+const deleteStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { studentId } = req.params;
     const result = await StduentServices.deleteStudentFromDB(studentId);
@@ -47,13 +45,8 @@ const deleteStudent = async (req: Request, res: Response) => {
       message: "Stduent is deleted Successfully",
       data: result,
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: error.message || "Something went wrong",
-      error: error,
-    });
+  } catch (err) {
+    next(err);
   }
 };
 
