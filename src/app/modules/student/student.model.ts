@@ -6,8 +6,6 @@ import {
   StudentModel,
   UserName,
 } from "./student.interface";
-import bcrypt from "bcrypt";
-import config from "../../config";
 
 const UserNameSchema = new Schema<UserName>({
   firstName: { type: String, required: true },
@@ -40,7 +38,6 @@ const StudentSchema = new Schema<TStudent, StudentModel>(
       unique: true,
       ref: "User",
     },
-    password: { type: String, required: [true, "Password is required"] },
     name: { type: UserNameSchema, required: true },
     gender: { type: String, enum: ["male", "female"], required: true },
     dateOfBirth: { type: String, required: true },
@@ -69,25 +66,6 @@ const StudentSchema = new Schema<TStudent, StudentModel>(
 // virtual
 StudentSchema.virtual("fullName").get(function () {
   return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
-});
-
-// to hash password
-
-StudentSchema.pre("save", async function (next) {
-  // console.log(this, "Pree Hook: We will save data");
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this;
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_rounds_salt)
-  );
-  next();
-});
-
-// after save data password will not show here
-StudentSchema.post("save", function (doc, next) {
-  doc.password = "";
-  next();
 });
 
 // Query Middlewear

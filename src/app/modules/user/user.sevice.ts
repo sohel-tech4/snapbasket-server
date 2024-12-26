@@ -2,6 +2,7 @@ import config from "../../config";
 import { TStudent } from "../student/student.interface";
 import { Student } from "../student/student.model";
 import { TUser } from "./user.interface";
+import { User } from "./user.model";
 
 const createStudentIntoDB = async (Password, studentData: TStudent) => {
   //   if (await Student.isUserExists(studentData.id)) {
@@ -15,15 +16,17 @@ const createStudentIntoDB = async (Password, studentData: TStudent) => {
   userData.password = Password || (config.default_pass as string);
   userData.role = "student";
 
-  const result = await Student.create(userData);
+  const newUser = await User.create(userData);
 
   //create student
-  if (Object.keys(result).length) {
-    studentData.id = result.id;
-    studentData.user = result._id;
-  }
+  if (Object.keys(newUser).length) {
+    studentData.id = newUser.id;
+    studentData.user = newUser._id;
 
-  return result;
+    const newStudent = await Student.create(studentData);
+
+    return newStudent;
+  }
 };
 
 export const UserServices = {
