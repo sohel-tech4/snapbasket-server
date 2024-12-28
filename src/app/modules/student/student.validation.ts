@@ -28,32 +28,36 @@ const LocalGuardianValidationSchema = z.object({
   address: z.string(),
 });
 
-const StudentValidationSchema = z.object({
-  id: z.string(),
-  password: z.string().max(20),
-  name: UserNameValidationSchema,
-  gender: z.enum(["male", "female"]),
-  dateOfBirth: z.string().refine((date) => !isNaN(Date.parse(date)), {
-    message: "Invalid date format. Please provide a valid date.",
+const createStudentValidationSchema = z.object({
+  body: z.object({
+    password: z.string().max(20),
+    student: z.object({
+      name: UserNameValidationSchema,
+      gender: z.enum(["male", "female"]),
+      dateOfBirth: z.string().refine((date) => !isNaN(Date.parse(date)), {
+        message: "Invalid date format. Please provide a valid date.",
+      }),
+      email: z.string().email({
+        message: "Invalid email format. Please provide a valid email address.",
+      }),
+      contactNo: z.string().regex(/^\+?[0-9]{10,15}$/, {
+        message: "Contact number must be a valid phone number.",
+      }),
+      emergencyContactNo: z.string().regex(/^\+?[0-9]{10,15}$/, {
+        message: "Emergency contact number must be a valid phone number.",
+      }),
+      bloodGroup: z
+        .enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"])
+        .optional(),
+      presentAddress: z.string(),
+      permanentAddress: z.string(),
+      guardian: GuardianValidationSchema,
+      localGuardian: LocalGuardianValidationSchema,
+      profileImg: z.string().url().optional(),
+    }),
   }),
-  email: z.string().email({
-    message: "Invalid email format. Please provide a valid email address.",
-  }),
-  contactNo: z.string().regex(/^\+?[0-9]{10,15}$/, {
-    message: "Contact number must be a valid phone number.",
-  }),
-  emergencyContactNo: z.string().regex(/^\+?[0-9]{10,15}$/, {
-    message: "Emergency contact number must be a valid phone number.",
-  }),
-  bloodGroup: z
-    .enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"])
-    .optional(),
-  presentAddress: z.string(),
-  permanentAddress: z.string(),
-  guardian: GuardianValidationSchema,
-  localGuardian: LocalGuardianValidationSchema,
-  profileImg: z.string().url().optional(),
-  isDeleted: z.boolean(),
 });
 
-export default StudentValidationSchema;
+export const studentValidations = {
+  createStudentValidationSchema,
+};

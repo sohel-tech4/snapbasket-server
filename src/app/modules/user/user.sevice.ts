@@ -5,9 +5,9 @@ import { TUser } from "./user.interface";
 import { User } from "./user.model";
 
 const createStudentIntoDB = async (Password, studentData: TStudent) => {
-  //   if (await Student.isUserExists(studentData.id)) {
-  //     throw new Error("User Already Exists");
-  //   }
+  if (await Student.isUserExists(studentData.id)) {
+    throw new Error("User Already Exists");
+  }
 
   const userData: Partial<TUser> = {};
 
