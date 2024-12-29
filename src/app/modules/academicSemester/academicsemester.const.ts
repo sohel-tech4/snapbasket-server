@@ -6,7 +6,7 @@ import {
 
 export const SemesterName: TAcademicSemesterName[] = [
   "Autumn",
-  "Summer",
+  "Summar",
   "Fall",
 ];
 
