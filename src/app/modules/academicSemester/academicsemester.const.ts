@@ -1,20 +1,28 @@
-import { TCode, TMonths, TName } from "./academicsemester.interface";
+import {
+  TAcademicSemesterCode,
+  TMonths,
+  TAcademicSemesterName,
+} from "./academicsemester.interface";
+
+export const SemesterName: TAcademicSemesterName[] = [
+  "Autumn",
+  "Summer",
+  "Fall",
+];
 
 export const Months: TMonths[] = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  
-export const SemesterName : TName[] = ["Automn", "Summer", "Fall"]
-  
-export const SemesterCode : TCode[] = ["01", "02", "03"]
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+export const SemesterCode: TAcademicSemesterCode[] = ["01", "02", "03"];

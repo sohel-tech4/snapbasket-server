@@ -1,15 +1,12 @@
 import { z } from "zod";
-import { SemesterCode, SemesterName, Months } from "./academicsemester.const";
+import { SemesterCode, Months, SemesterName } from "./academicsemester.const";
 
-export const academicSemesterSchema = z.object({
-  name: z.enum(SemesterName), 
-  code: z.enum(SemesterCode), 
-  year: z.string().refine((val) => /^\d{4}$/.test(val), {
-    message: "Year must be a valid 4-digit year",
-  }), 
-  startMonth: z.enum(Months), 
-  endMonth: z.enum(Months), 
+const createAcademicSemesterValidationSchema = z.object({
+  name: z.enum([...SemesterName] as [string, ...string[]]),
+  code: z.enum([...SemesterCode] as [string, ...string[]]),
+  year: z.string(),
+  startMonth: z.enum([...Months] as [string, ...string[]]),
+  endMonth: z.enum([...Months] as [string, ...string[]]),
 });
 
-// Type inference from Zod schema
-export type AcademicSemesterInput = z.infer<typeof academicSemesterSchema>;
+export default createAcademicSemesterValidationSchema;
