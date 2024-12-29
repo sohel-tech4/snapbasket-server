@@ -27,6 +27,6 @@ const academicSemesterSchema = new Schema<TacademicSemester>({
 });
 
 export const academicsemester = model<TacademicSemester>(
-  "Academic-semester",
+  "academicsemester",
   academicSemesterSchema
 );

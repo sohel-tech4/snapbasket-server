@@ -8,7 +8,7 @@ const createAcademicSemester = catchAsync(async (req, res) => {
     req.body
   );
 
-  console.log(result);
+  console.log(req.body);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
