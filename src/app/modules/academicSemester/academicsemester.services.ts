@@ -8,7 +8,7 @@ const createAcademicSemesterIntoDB = async (payload: TacademicSemester) => {
     throw new Error('Invalid Code')
   }
 
-  const result = await academicsemester.create(payload);
+const result = await academicsemester.create(payload);
   console.log(payload);
   return result;
 };
@@ -18,7 +18,13 @@ const getAllAcademicSemsterFromDB= async() =>{
   return result
 }
 
+const getSingleAcademicSemesterFromDB = async(id : string) =>{
+  const result = await academicsemester.findOne({id : id})
+  return result
+}
+
 export const academicSemesterServices = {
   createAcademicSemesterIntoDB,
-  getAllAcademicSemsterFromDB
+  getAllAcademicSemsterFromDB,
+  getSingleAcademicSemesterFromDB
 };
