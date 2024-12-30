@@ -1,18 +1,9 @@
+import { academiesSemesterNameCodeMapper } from "./academicsemester.const";
 import { TacademicSemester } from "./academicsemester.interface";
 import { academicsemester } from "./academicsemester.model";
 
 const createAcademicSemesterIntoDB = async (payload: TacademicSemester) => {
-
-  type TacademiesSemesterNameCodeMapper = {
-    [Key:string] : string
-  }
-
-  const academiesSemesterNameCodeMapper : TacademiesSemesterNameCodeMapper = {
-    Autumn : '01',
-    Summar : '02',
-    Fall : '03'
-  }
-
+  
   if(academiesSemesterNameCodeMapper[payload.name]!== payload.code){
     throw new Error('Invalid Code')
   }
@@ -22,6 +13,12 @@ const createAcademicSemesterIntoDB = async (payload: TacademicSemester) => {
   return result;
 };
 
+const getAllAcademicSemsterFromDB= async() =>{
+  const result = await academicsemester.find();
+  return result
+}
+
 export const academicSemesterServices = {
   createAcademicSemesterIntoDB,
+  getAllAcademicSemsterFromDB
 };

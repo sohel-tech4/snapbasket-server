@@ -18,6 +18,17 @@ const createAcademicSemester = catchAsync(async (req, res) => {
   });
 });
 
+const getAllAcademicSemster = catchAsync(async(req, res)=>{
+    const result =  await academicSemesterServices.getAllAcademicSemsterFromDB()
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Academic Semesters are retrived successfully",
+      data: result,
+    });
+})
+
 export const academicSemesterConroller = {
   createAcademicSemester,
+  getAllAcademicSemster
 };
