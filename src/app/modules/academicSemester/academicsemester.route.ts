@@ -15,4 +15,12 @@ router.get("/", academicSemesterConroller.getAllAcademicSemster);
 
 router.get("/:id", academicSemesterConroller.getSingleAcademicSemester);
 
+router.patch(
+  "/:id",
+  validateRequest(
+    AcademicSemesterValidation.UpdateAcademicSemesterValidationSchema
+  ),
+  academicSemesterConroller.updateAcademicSemester
+);
+
 export const AcademmicSemesterRoutes = router;
