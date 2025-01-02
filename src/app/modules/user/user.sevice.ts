@@ -18,7 +18,7 @@ const createStudentIntoDB = async (Password, payLoad: TStudent) => {
   );
 
   //create user
-  userData.id = generatedStudentId(academicSemester);
+  userData.id = await generatedStudentId(academicSemester);
   userData.password = Password || (config.default_pass as string);
   userData.role = "student";
 
