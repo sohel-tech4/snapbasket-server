@@ -16,9 +16,12 @@ const createStudentIntoDB = async (Password, payLoad: TStudent) => {
   const academicSemester = await academicsemester.findById(
     payLoad.admissionSemester
   );
+  if (!academicSemester) {
+    throw new Error("Invalid Academic Semester");
+  }
 
   //create user
-  userData.id = generatedStudentId(academicSemester);
+  userData.id = await generatedStudentId(academicSemester);
   userData.password = Password || (config.default_pass as string);
   userData.role = "student";
 
