@@ -15,7 +15,7 @@ router.post(
 
 router.get("/", AcademicFacultyController.getAllAcademicFaculty);
 router.get("/:facultyId", AcademicFacultyController.getSingleAcademicFaculty);
-router.get(
+router.patch(
   "/:facultyId",
   AcademicFacultyController.updateSingleAcademicFaculty
 );
