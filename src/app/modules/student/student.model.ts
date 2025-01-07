@@ -61,7 +61,7 @@ const StudentSchema = new Schema<TStudent, StudentModel>(
     },
     academicDepartment: {
       type: Schema.Types.ObjectId,
-      ref: "AcademicFaculty",
+      ref: "academicDepartment",
       required: true,
     },
   },

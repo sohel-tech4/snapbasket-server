@@ -14,7 +14,7 @@ const createStudentIntoDB = async (Password, payLoad: TStudent) => {
   const userData: Partial<TUser> = {};
 
   const academicSemester = await academicsemester.findById(
-    payLoad.admissionSemester
+    payLoad.academicSemester
   );
   if (!academicSemester) {
     throw new Error("Invalid Academic Semester");
