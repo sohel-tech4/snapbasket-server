@@ -54,7 +54,16 @@ const StudentSchema = new Schema<TStudent, StudentModel>(
     guardian: { type: GuardianSchema, required: true },
     localGuardian: { type: LocalGuardianSchema, required: true },
     profileImg: { type: String, required: false }, // Optional
-    admissionSemester: { type: String, required: true },
+    academicSemester: {
+      type: Schema.Types.ObjectId,
+      ref: "AcademicSemester",
+      required: true,
+    },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: "AcademicFaculty",
+      required: true,
+    },
   },
   {
     toJSON: {
