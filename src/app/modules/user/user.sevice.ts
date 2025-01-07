@@ -24,6 +24,7 @@ const createStudentIntoDB = async (Password, payLoad: TStudent) => {
     throw new AppError(httpStatus.NOT_FOUND, "Invalid Academic Semester");
   }
 
+  // transaction and roll back
   const session = await mongoose.startSession();
 
   try {
@@ -56,6 +57,7 @@ const createStudentIntoDB = async (Password, payLoad: TStudent) => {
   } catch (Err) {
     await session.abortTransaction();
     await session.endSession();
+    console.log(Err);
   }
 };
 
