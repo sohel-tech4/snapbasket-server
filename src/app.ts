@@ -13,8 +13,8 @@ app.use(cors());
 
 app.use("/api/v1", router);
 
-app.use("/", StudentRoutes);
-app.use("/:id", StudentRoutes);
+// app.use("/", StudentRoutes);
+// app.use("/:id", StudentRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
