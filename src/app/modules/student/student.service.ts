@@ -28,8 +28,8 @@ const getSingleStudentFromDB = async (id: string) => {
   return result;
 };
 
-const updateSingleStudentIntoDB = async(id: string) =>{
-
+const updateSingleStudentIntoDB = async(id: string, payload: string) =>{
+console.log(payload);
 }
 
 const deleteStudentFromDB = async (id: string) => {
