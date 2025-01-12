@@ -60,6 +60,53 @@ const createStudentValidationSchema = z.object({
   }),
 });
 
+const updateSingleStudentValidationSchema = z.object({
+  body: z.object({
+    student: z
+      .object({
+        name: UserNameValidationSchema.partial(),
+        gender: z.enum(["male", "female"]).optional(),
+        dateOfBirth: z
+          .string()
+          .refine((date) => !isNaN(Date.parse(date)), {
+            message: "Invalid date format. Please provide a valid date.",
+          })
+          .optional(),
+        email: z
+          .string()
+          .email({
+            message: "Invalid email format. Please provide a valid email address.",
+          })
+          .optional(),
+        contactNo: z
+          .string()
+          .regex(/^\+?[0-9]{10,15}$/, {
+            message: "Contact number must be a valid phone number.",
+          })
+          .optional(),
+        emergencyContactNo: z
+          .string()
+          .regex(/^\+?[0-9]{10,15}$/, {
+            message: "Emergency contact number must be a valid phone number.",
+          })
+          .optional(),
+        bloodGroup: z
+          .enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"])
+          .optional(),
+        presentAddress: z.string().optional(),
+        permanentAddress: z.string().optional(),
+        guardian: GuardianValidationSchema.partial().optional(),
+        localGuardian: LocalGuardianValidationSchema.partial().optional(),
+        profileImg: z.string().url().optional(),
+        academicSemester: z.string().optional(),
+        academicDepartment: z.string().optional(),
+      })
+      .partial(), // Allow partial updates
+  }),
+});
+
+
 export const studentValidations = {
   createStudentValidationSchema,
+  updateSingleStudentValidationSchema  
 };

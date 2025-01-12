@@ -7,7 +7,7 @@ router.get("/", StudentControllers.getStudents);
 
 router.get("/:studentId", StudentControllers.getSingleStudent);
 
-router.patch("/:studentId", StudentControllers);
+router.patch("/:studentId", StudentControllers.updateSingleStudent);
 
 router.delete("/:studentId", StudentControllers.deleteStudent);
 

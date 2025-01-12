@@ -77,6 +77,7 @@ const StudentSchema = new Schema<TStudent, StudentModel>(
   }
 );
 
+
 // virtual
 StudentSchema.virtual("fullName").get(function () {
   return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
