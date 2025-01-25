@@ -1,32 +1,13 @@
 import { Router } from "express";
-import { StudentRoutes } from "../modules/student/student.route";
-import { UserRoutes } from "../modules/user/user.route";
-import { AcademmicSemesterRoutes } from "../modules/academicSemester/academicsemester.route";
-import { AcademicFacultyRoutes } from "../modules/academicFaculty/academicfaculty.route";
-import { AcademicDepartmentRoutes } from "../modules/academicdDepartment/academicdepartment.route";
+import { ProductRoutes } from "../modules/product.route";
+// import { UserRoutes } from "../modules/user/user.route";
 
 const router = Router();
 
 const moduleRoutes = [
   {
-    path: "/students",
-    route: StudentRoutes,
-  },
-  {
-    path: "/users",
-    route: UserRoutes,
-  },
-  {
-    path: "/academic-semesters",
-    route: AcademmicSemesterRoutes,
-  },
-  {
-    path: "/academic-faculties",
-    route: AcademicFacultyRoutes,
-  },
-  {
-    path: "/academic-departments",
-    route: AcademicDepartmentRoutes,
+    path: "/products",
+    route: ProductRoutes,
   },
 ];
 
