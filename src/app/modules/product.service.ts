@@ -6,6 +6,18 @@ const createProductIntoDB = async (payLoad: TProduct) => {
   return result;
 };
 
+const getProductFromDB = async () => {
+  const result = await ProductModel.find();
+  return result;
+};
+
+const getSingleProductFromDB = async (id : string) => {
+  const result = await ProductModel.findById(id);
+  return result;
+};
+
 export const ProductServices = {
   createProductIntoDB,
+  getProductFromDB,
+  getSingleProductFromDB
 };

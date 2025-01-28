@@ -8,11 +8,33 @@ const createProduct = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Academic Faculty is created successfully",
+    message: "Products is created successfully",
+    data: result,
+  });
+});
+
+const getProducts = catchAsync(async (req, res) => {
+  const result = await ProductServices.getProductFromDB();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Products are retrived successfully",
+    data: result,
+  });
+});
+
+const getSingleProducts = catchAsync(async (req, res) => {
+  const result = await ProductServices.getSingleProductFromDB(req.params.id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Product is retrived successfully",
     data: result,
   });
 });
 
 export const ProductController = {
   createProduct,
+  getProducts,
+  getSingleProducts
 };
