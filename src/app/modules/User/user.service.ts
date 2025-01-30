@@ -1,13 +1,13 @@
-import QueryBuilder from '../../builder/QueryBuilder';
-import config from '../../config';
-import { UserSearchableFields } from './user.constant';
-import { IUser } from './user.interface';
-import { User } from './user.model';
-import bcryptJs from 'bcryptjs';
+import config from "../../config";
+// import { UserSearchableFields } from "./user.constant";
+import { IUser } from "./user.interface";
+import { User } from "./user.model";
+import bcryptJs from "bcryptjs";
+
 const createUser = async (user: IUser) => {
   user.password = await bcryptJs.hash(
     user.password,
-    Number(config.bcrypt_salt_rounds),
+    Number(config.bcrypt_rounds_salt)
   );
   return await User.create(user);
 };
@@ -16,21 +16,21 @@ const findUserById = async (userId: string) => {
   return await User.findById(userId);
 };
 
-const getAllUsers = async (query: Record<string, unknown>) => {
-  const userQuery = new QueryBuilder(User.find(), query)
-    .search(UserSearchableFields)
-    .filter()
-    .sort()
-    .paginate()
-    .fields();
+// const getAllUsers = async (query: Record<string, unknown>) => {
+//   const userQuery = new QueryBuilder(User.find(), query)
+//     .search(UserSearchableFields)
+//     .filter()
+//     .sort()
+//     .paginate()
+//     .fields();
 
-  const result = await userQuery.modelQuery;
-  const metaData = await userQuery.countTotal();
-  return {
-    meta: metaData,
-    data: result,
-  };
-};
+//   const result = await userQuery.modelQuery;
+//   const metaData = await userQuery.countTotal();
+//   return {
+//     meta: metaData,
+//     data: result,
+//   };
+// };
 
 const updateUserById = async (userId: string, payload: Partial<IUser>) => {
   const result = await User.findByIdAndUpdate({ _id: userId }, payload, {
@@ -48,7 +48,7 @@ const deleteUserById = async (userId: string) => {
 export const UserService = {
   createUser,
   findUserById,
-  getAllUsers,
+  // getAllUsers,
   updateUserById,
   deleteUserById,
 };

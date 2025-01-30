@@ -1,19 +1,19 @@
-import express from 'express';
-import validateRequest from '../../middlewares/validateRequest';
-import { UserController } from './user.controller';
+import express from "express";
+import validateRequest from "../../middlewares/validateRequest";
+import { UserController } from "./user.controller";
 import {
   createUserValidationSchema,
-  updateUserValidationSchema,
-} from './user.validation';
-import { USER_ROLE } from './user.utils';
+  // updateUserValidationSchema,
+} from "./user.validation";
+// import { USER_ROLE } from "./user.utils";
 
 const router = express.Router();
 
 router.post(
-  '/create-user',
+  "/",
   // auth(USER_ROLE.admin),
   validateRequest(createUserValidationSchema),
-  UserController.createUser,
+  UserController.createUser
 );
 
 // router.get('/', auth(USER_ROLE.admin), UserController.getAllUsers);
