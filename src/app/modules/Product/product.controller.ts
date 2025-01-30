@@ -1,7 +1,8 @@
-import catchAsync from "../utils/catchasync";
-import sendResponse from "../utils/sendResponse";
+
 import httpStatus from "http-status";
 import { ProductServices } from "./product.service";
+import sendResponse from "../../utils/sendResponse";
+import catchAsync from "../../utils/catchAsync";
 
 const createProduct = catchAsync(async (req, res) => {
   const result = await ProductServices.createProductIntoDB(req.body);
